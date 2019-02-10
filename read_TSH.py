@@ -90,7 +90,7 @@ def diagnosis(lab_vals):
 
     return patient_diagnosis
 
-# def create_dicts(name, age, gender, lab_vals):
+# def create_dicts(name, age, gender, diagnosis):
     # print(name)
     # Step 1: Seperate first name and last name
     # Step 2: Create the dictionaries
