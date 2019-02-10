@@ -3,7 +3,8 @@ import numpy
 
 def main():
     name, age, gender, lab_vals = load_data("test_data.txt")
-    patient_diagnosis = diagnosis(lab_vals)
+    patient_diagnosis, TSH_vals = diagnosis(lab_vals)
+    create_dicts(name, age, gender, patient_diagnosis, TSH_vals)
 
 
 def load_data(input_file):
@@ -68,15 +69,17 @@ def diagnosis(lab_vals):
 
     """
     patient_diagnosis = []
+    TSH_vals = []
     for i, c in enumerate(lab_vals):
-        lab_vals[i] = lab_vals[i].replace("\n", "")  # Remove \n
-        split = lab_vals[i].split(",")  # Divide up numbers into a list
+        c = c.replace("\n", "")  # Remove \n
+        split = c.split(",")  # Divide up numbers into a list
 
         # Isolate just the numbers from each patient data:
         TSH = []
         for l in split:
             if (l != "TSH"):
                 TSH.append(float(l))
+        TSH_vals.append(TSH)
 
         # Determine patient diagnosis:
         if (max(TSH) > 4.0 and min(TSH) > 1.0):
@@ -88,12 +91,37 @@ def diagnosis(lab_vals):
         if (min(TSH) >= 1.0 and max(TSH) <= 4.0):
             patient_diagnosis.append("normal thyroid function")
 
-    return patient_diagnosis
+    return patient_diagnosis, TSH_vals
 
-# def create_dicts(name, age, gender, diagnosis):
-    # print(name)
+
+def create_dicts(name, age, gender, diagnosis, TSH_vals):
     # Step 1: Seperate first name and last name
+    first_name = []
+    last_name = []
+    dict_names = []
+    for c in name:
+        c = c.replace("\n", "")
+        split_name = c.split(" ")
+        first_name.append(split_name[0])
+        last_name.append(split_name[1])
+
+        dict_names.append(c.replace(" ", "_"))
+
     # Step 2: Create the dictionaries
+    patient_dicts = []
+    for i, c in enumerate(name):
+
+        dictionary = {
+                    "First Name": first_name[i],
+                    "Last Name": last_name[i],
+                    "Age": age[i],
+                    "Gender": gender[i],
+                    "Diagnosis": diagnosis[i],
+                    "TSH results": TSH_vals[i],
+        }
+        patient_dicts.append(dictionary)
+
+
 
 if __name__ == "__main__":
     main()
