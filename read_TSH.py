@@ -121,7 +121,5 @@ def create_dicts(name, age, gender, diagnosis, TSH_vals):
         }
         patient_dicts.append(dictionary)
 
-
-
 if __name__ == "__main__":
     main()
