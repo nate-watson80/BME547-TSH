@@ -30,5 +30,5 @@ for i, c in enumerate(iterate):
 ])
 def test_diagnosis(patient, expected):
 
-    result = diagnosis(patient)
+    result, TSH = diagnosis(patient)
     assert result == expected
