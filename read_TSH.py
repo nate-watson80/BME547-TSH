@@ -1,5 +1,6 @@
 import numpy
 
+
 def load_data(input_file):
     """ Import, load, and sort the raw patient data.
 
@@ -27,22 +28,21 @@ def load_data(input_file):
     name = []
     lab_vals = []
     # Create a list to iterate through
-    iterate = numpy.linspace(0,4*num_patient-4,num_patient)
+    iterate = numpy.linspace(0, 4*num_patient-4, num_patient)
     iterate = iterate.astype(int)
 
     # Seperate name and lab_vals into indiviudal data lists
-    for i,c in enumerate(iterate):
+    for i, c in enumerate(iterate):
         name.append(data_list[c])
         lab_vals.append(data_list[c+3])
-        #print(c)
 
     age = []
     gender = []
-    for i,c in enumerate(data_list):
-        data_list[i] =  data_list[i].rstrip()  # Cut out trailing zeros
-        data_list[i] =  data_list[i].lstrip()  # Cut out leading zeros
+    for i, c in enumerate(data_list):
+        data_list[i] = data_list[i].rstrip()  # Cut out trailing zeros
+        data_list[i] = data_list[i].lstrip()  # Cut out leading zeros
 
-        if (data_list[i].isdigit() == True):
+        if data_list[i].isdigit() is True:
             age.append(data_list[i])
 
         if (data_list[i] == "Male" or data_list[i] == "Female"):
