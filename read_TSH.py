@@ -1,6 +1,11 @@
 import numpy
 
 
+def main():
+    name, age, gender, lab_vals = load_data("test_data.txt")
+    patient_diagnosis = diagnosis(lab_vals)
+
+
 def load_data(input_file):
     """ Import, load, and sort the raw patient data.
 
@@ -51,4 +56,44 @@ def load_data(input_file):
 
     raw_data.close()
 
-name, age, gender, lab_vals = load_data("test_data.txt")
+
+def diagnosis(lab_vals):
+    """ Load in raw TSH values and return the diagnosis.
+
+    A raw .txt file is loaded into python.
+
+    Args:
+
+    Returns:
+
+    """
+    patient_diagnosis = []
+    for i, c in enumerate(lab_vals):
+        lab_vals[i] = lab_vals[i].replace("\n", "")  # Remove \n
+        split = lab_vals[i].split(",")  # Divide up numbers into a list
+
+        # Isolate just the numbers from each patient data:
+        TSH = []
+        for l in split:
+            if (l != "TSH"):
+                TSH.append(float(l))
+
+        # Determine patient diagnosis:
+        if (max(TSH) > 4.0 and min(TSH) > 1.0):
+            patient_diagnosis.append("hypothyroidism")
+
+        if (min(TSH) < 1.0 and max(TSH) < 4.0):
+            patient_diagnosis.append("hyperthyroidism")
+
+        if (min(TSH) >= 1.0 and max(TSH) <= 4.0):
+            patient_diagnosis.append("normal thyroid function")
+
+    return patient_diagnosis
+
+# def create_dicts(name, age, gender, lab_vals):
+    # print(name)
+    # Step 1: Seperate first name and last name
+    # Step 2: Create the dictionaries
+
+if __name__ == "__main__":
+    main()
