@@ -3,6 +3,20 @@ import json
 
 
 def main():
+    """ Main operating code to call modules.
+
+    First, load data from the a .txt data file. For each patient, their lab
+    values are passed into a diagnosis module to determine their diagnosis.
+    Finally, all of the data is assembled together as a dictionary and outputed
+    as a .JSON file to a file on the path ./output_files/Firstname-Lastname
+
+    Args:
+        None
+
+    Returns:
+        None
+
+    """
     name, age, gender, lab_vals = load_data("test_data.txt")
     patient_diagnosis, TSH_vals = diagnosis(lab_vals)
     patient_dicts = create_dicts(
@@ -20,13 +34,13 @@ def load_data(input_file):
     seperate each data line into lists of name, age, gender, and lab values.
 
     Args:
-        input_file (string): Raw data to be analyzed
+        input_file (str): Raw data to be analyzed
 
     Returns:
-        name (list): Full name of patients
-        age (list): Age of patients
-        gender (list): Gender of patients
-        lab_vals (list): TSH laboratory values
+        name (list of str): Full name of patients
+        age (list of str): Age of patients
+        gender (list of str): Gender of patients
+        lab_vals (list of str): TSH laboratory values
 
     """
 
@@ -65,11 +79,18 @@ def load_data(input_file):
 def diagnosis(lab_vals):
     """ Load in raw TSH values and return the diagnosis.
 
-    A raw .txt file is loaded into python.
+    A TSH diagnosis was based upon a number of TSH measurements. Patients that
+    presented with one TSH reading under 1.0 mU/L were determined to have
+    hyperthyroidism. Patients taht presented with one TSH measurement above
+    4.0 mU/L were determined to have hypothyroidism.
 
     Args:
+        lab_vals (list-string): TSH laboratory values
 
     Returns:
+        patient_diagnosis (str):  Diagnosis of "hypothyroidism",
+            "hyperthyroidism", or "normal thyroid function."
+        TSH_vals (list of list of floats): List of TSH values for each patient.
 
     """
     patient_diagnosis = []
@@ -99,7 +120,28 @@ def diagnosis(lab_vals):
 
 
 def create_dicts(name, age, gender, diagnosis, TSH_vals):
-    # Step 1: Seperate first name and last name
+    """ Organize all patient data into patient specific dictionaries.
+
+    Data for each patient was decoded from a .txt input file previously.
+    Data is now organized into dictionaries containing their first name, last
+    name, age, gender, diagnosis, and TSH laboratory values. These dictionaries
+    are then stored in a list called patient_dicts.
+
+    Args:
+        name (list of str): Full name of patients
+        age (list of str): Age of patients
+        gender (list-str): Gender of patients
+        diagnosis (str):  Diagnosis of "hypothyroidism","hyperthyroidism",
+            or "normal thyroid function."
+        TSH_vals (list of list of floats): List of TSH values for each patient.
+
+    Returns:
+        patient_dicts (list of dicts): List where each element is a
+            patient-specific dictionaries conaining irst name, last
+            name, age, gender, diagnosis, and TSH laboratory values.
+
+    """
+    # Seperate first name and last name
     first_name = []
     last_name = []
     dict_names = []
@@ -111,7 +153,7 @@ def create_dicts(name, age, gender, diagnosis, TSH_vals):
 
         dict_names.append(c.replace(" ", "_"))
 
-    # Step 2: Create the dictionaries
+    # Create the dictionaries
     patient_dicts = []
     for i, c in enumerate(name):
 
@@ -129,6 +171,22 @@ def create_dicts(name, age, gender, diagnosis, TSH_vals):
 
 
 def output_data(patient_dicts):
+    """ Output dictionaries into patient specific .JSON files.
+
+    Patient dictionaries are sorted and sperated into individual .JSON files.
+    Files take the name firstname-lastname.JSON and contain all information
+    present in their dictionary. Files are added to a directory labelled
+    output_files on the path ./output_files/filename.
+
+    Args:
+        patient_dicts (list of dicts): List where each element is a
+            patient-specific dictionaries conaining irst name, last
+            name, age, gender, diagnosis, and TSH laboratory values.
+
+    Returns:
+        None
+
+    """
     for c in patient_dicts:
         filename = c.get("First Name") + "-" + c.get("Last Name") + ".json"
         path = "./" + "output_files/" + filename
