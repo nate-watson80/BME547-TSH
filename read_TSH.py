@@ -90,7 +90,8 @@ def diagnosis(lab_vals):
     Returns:
         patient_diagnosis (str):  Diagnosis of "hypothyroidism",
             "hyperthyroidism", or "normal thyroid function."
-        TSH_vals (list of list of floats): List of TSH values for each patient.
+        TSH_vals_sorted (list of list of floats): List of TSH values
+            for each patient.
 
     """
     patient_diagnosis = []
@@ -116,7 +117,12 @@ def diagnosis(lab_vals):
         if (min(TSH) >= 1.0 and max(TSH) <= 4.0):
             patient_diagnosis.append("normal thyroid function")
 
-    return patient_diagnosis, TSH_vals
+    # Extra credit: Sort the patient TSH values:
+    TSH_vals_sorted = []
+    for c in TSH_vals:
+        TSH_vals_sorted.append(sorted(c))
+
+    return patient_diagnosis, TSH_vals_sorted
 
 
 def create_dicts(name, age, gender, diagnosis, TSH_vals):
