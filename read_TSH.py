@@ -5,8 +5,11 @@ import json
 def main():
     name, age, gender, lab_vals = load_data("test_data.txt")
     patient_diagnosis, TSH_vals = diagnosis(lab_vals)
-    patient_dicts = create_dicts(name, age, gender, patient_diagnosis, TSH_vals)
+    patient_dicts = create_dicts(
+                                name, age, gender,
+                                patient_diagnosis, TSH_vals)
     output_data(patient_dicts)
+
 
 def load_data(input_file):
     """ Import, load, and sort the raw patient data.
