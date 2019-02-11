@@ -1,11 +1,12 @@
 import numpy
+import json
 
 
 def main():
     name, age, gender, lab_vals = load_data("test_data.txt")
     patient_diagnosis, TSH_vals = diagnosis(lab_vals)
-    create_dicts(name, age, gender, patient_diagnosis, TSH_vals)
-
+    patient_dicts = create_dicts(name, age, gender, patient_diagnosis, TSH_vals)
+    output_data(patient_dicts)
 
 def load_data(input_file):
     """ Import, load, and sort the raw patient data.
@@ -120,6 +121,18 @@ def create_dicts(name, age, gender, diagnosis, TSH_vals):
                     "TSH results": TSH_vals[i],
         }
         patient_dicts.append(dictionary)
+
+    return patient_dicts
+
+
+def output_data(patient_dicts):
+    for c in patient_dicts:
+        filename = c.get("First Name") + "-" + c.get("Last Name") + ".json"
+        path = "./" + "output_files/" + filename
+        out_file = open(path, "w")
+        json.dump(c, out_file)
+        out_file.close()
+
 
 if __name__ == "__main__":
     main()
