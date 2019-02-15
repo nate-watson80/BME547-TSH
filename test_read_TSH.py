@@ -29,6 +29,20 @@ for i, c in enumerate(iterate):
                 "hyperthyroidism"]),
 ])
 def test_diagnosis(patient, expected):
+    """ Main testing modules for the diagnosis module.
+
+    Import in diagnosis from the read_TSH file. Standard lab values are
+    fed into the algorithm with what the diagnosis should be. This testing
+    module should be utilized via the pytest package.
+
+    Args:
+        patient (str): Patient TSH values
+        expected (str): Diagnosis result expected.
+
+    Returns:
+        None
+
+    """
 
     result, TSH = diagnosis(patient)
     assert result == expected
