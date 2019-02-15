@@ -1,5 +1,6 @@
 import pytest
 from read_TSH import diagnosis
+from read_TSH import create_dicts
 
 
 @pytest.mark.parametrize("patient,expected", [
@@ -34,3 +35,33 @@ def test_diagnosis(patient, expected):
 
     result, TSH = diagnosis(patient)
     assert result == expected
+
+
+def test_create_dicts():
+    """ Testing module for the create_dicts module.
+
+    Create a fake dictionary with fake names and values. Pass these values
+    into the create_dicts module and check to see if it is storing values in
+    the correct place.
+
+    Args:
+        None
+
+    Returns:
+        None
+
+    """
+
+    expected = {
+                "First Name": "John",
+                "Last Name": "Smith",
+                "Age": 12,
+                "Gender": "Male",
+                "Diagnosis": "Something wrong",
+                "TSH results": [2, 2, 2, 2, 2, 2],
+            }
+
+    result = create_dicts(["John Smith"], [12], ["Male"], ["Something wrong"],
+                          [[2, 2, 2, 2, 2, 2]])
+
+    assert expected == result[0]
