@@ -24,7 +24,7 @@ BME 547 - Medical Software Design
 ## Usage:
 
 To read in a particular file, edit the main() module to have load_data() load
-the text file of interest. 
+the text file of interest. Inputs to this module must be a .txt file. 
 
 ## Description:
 
